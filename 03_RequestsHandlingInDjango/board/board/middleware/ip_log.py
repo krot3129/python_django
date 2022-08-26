@@ -1,23 +1,20 @@
 import datetime
+from django.core.exceptions import PermissionDenied
 
-class Ip_log:
+class IPLOG:
 
-    def __init__(self, get_responce):
-        self.META = None
-        self.get_responce = get_responce
+    def __init__(self, get_response):
+        self.get_response = get_response
 
     def __call__(self, requests):
-        responce = self.get_responce(requests)
-        x_forwarded_for = requests.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[-1].strip()
-        else:
-            ip = requests.META.get('REMOTE_ADDR')
-        with open('IP_log', 'a', encoding='utf-8') as file:
-            date = datetime.datetime
-            file.write(str(date))
-            file.write(ip)
-        return responce
+
+        with open('Log_file.txt', 'a', encoding='utf-8') as file:
+            file.write(str(f'datetime:{datetime.datetime.now()}\n'
+                           f'URl:{requests.META.get("PATH_INFO")}\n'
+                           f'HTTP:{requests.META.get("HTTP_HOST")}\n\n'))
+        response = self.get_response(requests)
+
+        return response
 
 
 

@@ -1,0 +1,12 @@
+datetime:2022-08-26 13:55:16.165261
+URl:/advertisements
+HTTP:localhost:8000
+
+datetime:2022-08-26 13:55:31.667695
+URl:/
+HTTP:localhost:8000
+
+datetime:2022-08-26 13:55:33.828688
+URl:/contacts
+HTTP:localhost:8000
+

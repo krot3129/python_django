@@ -5,23 +5,19 @@
     <title>Объявление</title>
 </head>
 <body>
-    <p>
-        <select name="advertisements">
-            <option value="1">Мастер на час</option>
-          <option value="2">Выведение из запоя</option>
-          <option value="3">Услуги экскаватора-погрузчика</option>
-          <option value="4">гидромолота</option>
-          <option value="5">ямобура</option>
+<form>
+            <p><input list="advertisements" type="text"  placeholder="Введите услугу" /></p>
+            <p>
+                <button type="submit">Отправить</button>
+            </p>
+        </form>
+        <datalist id="advertisements">
+            {% for advertisements in advertisements %}
+            <option >{{advertisements}}</option>
+            {% endfor %}
 
-        </select>
-<!--    </p>-->
-<!--    <ul>-->
-<!--        {% for advertisements in advertisements %}-->
-<!--        <li>-->
-<!--            {{advertisements}}-->
-<!--        </li>-->
-<!--        {% endfor %}-->
-    </ul>
+        </datalist>
+
         <p>
            <a href="/"> Вернутся на главную</a>
 

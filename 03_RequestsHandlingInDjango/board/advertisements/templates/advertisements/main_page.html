@@ -5,19 +5,17 @@
     <title>Главная страница</title>
 </head>
 <body>
-        <p>
-            <select>
-            <option value="advertisements">объявление</option>
-          <option value="2">Выведение из запоя</option>
-          <option value="3">Услуги экскаватора-погрузчика</option>
-          <option value="4">гидромолота</option>
-          <option value="5">ямобура</option>
+<form action="" method="post">
+    {% csrf_token %}
+   <p><select size="3" multiple name="hero[]">
+    <option disabled>Выберите Регион</option>
+    <option value="Москва">Москва</option>
+    <option selected value="РО">Ростов-на-Дону</option>
+    <option value="Самара">Самара</option>
+   </select></p>
+   <p><input type="submit" value="Отправить"></p>
+  </form>
 
-        </select>
-
-
-
-        </p>
         <p>
             <a href="advertisements">Объявление</a>
         </p>
