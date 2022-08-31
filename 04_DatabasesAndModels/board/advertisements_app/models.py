@@ -9,6 +9,7 @@ class Advertisement(models.Model):
     price = models.FloatField(verbose_name='Цена')
     date_in = models.DateField(auto_now_add=True)
     date_out = models.DateField(auto_now=True)
+    view_count = models.IntegerField(default=0, null=True, verbose_name='Просмотров')
     author = models.ForeignKey('Author', on_delete=models.CASCADE)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     type = models.ForeignKey('Types', default=None, null=True, on_delete=models.CASCADE)
