@@ -11,6 +11,7 @@ class News(models.Model):
     update = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
     users = models.ForeignKey('User', on_delete=models.CASCADE, default=None, null=True)
+    news_com = models.ForeignKey('Comment', on_delete=models.CASCADE, default=None, null=True)
 
 
     def __str__(self):
@@ -28,7 +29,10 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
-    news_com = models.ForeignKey('News', on_delete=models.CASCADE, default=None, null=True)
+
+
+    def get_absolute_url(self):
+        return reverse('news-detail/<int:pk>', args=[str(self.id)])
 
 
 

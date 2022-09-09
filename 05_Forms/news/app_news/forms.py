@@ -9,5 +9,5 @@ class NewsForm(forms.Form):
 
 
 class CommentForm(forms.Form):
-     name = forms.CharField(label='Заголовок')
+     name = forms.CharField(label='Заголовок комментария')
      body = forms.CharField(widget=forms.Textarea(attrs={'cols':60, 'rows':10}), label='Комментарий')

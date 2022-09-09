@@ -42,8 +42,17 @@ class NewsDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['comment'] = CommentForm
+        data['comment'] = Comment.objects.all()
+        data['form'] = CommentForm
         return data
+
+    def post(self, request, pk=):
+        com_form = CommentForm(request.POST)
+        if com_form.is_valid():
+            Comment.objects.created(**com_form.cleaned_data)
+
+            return HttpResponseRedirect('')
+        return render(request, 'pages/news_detail.html', context={'com_form': com_form})
 
 
 
