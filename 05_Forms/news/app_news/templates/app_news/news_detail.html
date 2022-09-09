@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{object.name}}</title>
+</head>
+<body>
+<ul>{{object.name}}</ul>
+
+{{object.content}}
+<p>Дата создания: {{object.created_date}}
+</p>
+<form>
+    {{form.as_p}}
+     {% for com in comment %}
+    <ul>{{com}}</ul>
+    {% endfor %}
+</form>
+
+
+<p>
+</p>
+
+<a href="{% url 'news_update' news.pk %}">Update</a>
+<p></p>
+
+
+</body>
+</html>

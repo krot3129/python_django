@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить новость</title>
+</head>
+<body>
+<!--    <h1>Список новостей</h1>-->
+<!--        {% if news_list %}-->
+<!--            {% for news in news_list %}-->
+<!--            <ul>-->
+<!--                <li>-->
+<!--                    <a href="news/{{news.id}}">{{news.name}}</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--            {% endfor %}-->
+<!--        {% endif %}-->
+<form method="post" action="">
+    {% csrf_token %}
+    {{ news_form.as_p }}
+    <button type="submit">Добавить новость</button>
+</form>
+</body>
+</html>
