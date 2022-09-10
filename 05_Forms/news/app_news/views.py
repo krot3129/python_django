@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView
 
@@ -37,8 +37,10 @@ class NewsLists(ListView):
     queryset = News.objects.all()
 
 
+
 class NewsDetail(DetailView):
     model = News
+
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
@@ -46,12 +48,13 @@ class NewsDetail(DetailView):
         data['form'] = CommentForm
         return data
 
-    def post(self, request, pk=):
+    def post(self, request, pk):
         com_form = CommentForm(request.POST)
         if com_form.is_valid():
-            Comment.objects.created(**com_form.cleaned_data)
+            Comment.objects.create(**com_form.cleaned_data)
+            # pk.Comment.objects.id()
 
-            return HttpResponseRedirect('')
+            return HttpResponseRedirect('/news_list')
         return render(request, 'pages/news_detail.html', context={'com_form': com_form})
 
 
