@@ -10,7 +10,6 @@
     <ul>
         {% for news in news_lists %}
         <a href="news_list/{{news.id}}">{{news.name}} {{news.created_date}}</a>
-        <li>{{news.name}}</li>
     </ul>
     {% endfor %}
     {% endif %}
