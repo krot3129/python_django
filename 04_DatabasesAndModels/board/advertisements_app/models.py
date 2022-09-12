@@ -17,7 +17,7 @@ class Advertisement(models.Model):
 
 class Author(models.Model):
     name = models.CharField(max_length=30, verbose_name='Имя')
-    email = models.TextField(max_length=30, verbose_name='Электронная почта')
+    email = models.EmailField(max_length=30, verbose_name='Электронная почта')
     phone = models.IntegerField(verbose_name='Телефон')
 
     def __str__(self):
