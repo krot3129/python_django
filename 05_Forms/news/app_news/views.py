@@ -22,7 +22,8 @@ class NewsList(View):
     def post(self, request):
         news_form = NewsForm(request.POST)
         if news_form.is_valid():
-            News.objects.create(**news_form.cleaned_data)
+            news_form.save()
+            # News.objects.create(**news_form.cleaned_data)
             return HttpResponseRedirect('/')
         return render(request, 'pages/main_page.html', context={'news_form': news_form})
 
@@ -42,16 +43,19 @@ class NewsDetail(DetailView):
     model = News
 
 
-    def get_context_data(self, **kwargs):
+
+    def get_context_data(self,  **kwargs):
         data = super().get_context_data(**kwargs)
         data['comment'] = Comment.objects.all()
         data['form'] = CommentForm
         return data
 
     def post(self, request, pk):
-        com_form = CommentForm(request.POST)
+        com_form = CommentForm(request.POST, pk)
+        com_ob = Comment()
         if com_form.is_valid():
-            Comment.objects.create(**com_form.cleaned_data)
+            com_ob.save()
+            # Comment.objects.create(**com_form.cleaned_data)
             # pk.Comment.objects.id()
 
             return HttpResponseRedirect('/news_list')

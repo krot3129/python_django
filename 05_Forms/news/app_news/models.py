@@ -4,13 +4,15 @@ from django.urls import reverse
 
 
 class News(models.Model):
+    # STATUS_CHOICE ={'a':True,'n':False}
+
     objects = None
-    name = models.CharField(max_length=50, verbose_name='Заголовок')
+    name = models.CharField(max_length=50, verbose_name='Название')
     content = models.TextField(verbose_name='Контент')
-    created_date = models.DateTimeField(auto_now_add=True)
-    update = models.DateTimeField(auto_now=True)
-    active = models.BooleanField(default=True)
-    users = models.ForeignKey('User', on_delete=models.CASCADE, default=None, null=True)
+    created_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    update = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
+    active = models.BooleanField(default=None, verbose_name='Статус')
+    users = models.ForeignKey('User', on_delete=models.CASCADE, default=None, null=True, verbose_name='Пользователь')
 
 
     def __str__(self):
@@ -22,17 +24,23 @@ class News(models.Model):
 
 class Comment(models.Model):
     objects = None
-    name = models.CharField(max_length=50)
-    email = models.EmailField()
-    body = models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    active = models.BooleanField(default=True)
+    name = models.CharField(max_length=50, verbose_name='Заголовок')
+    email = models.EmailField(verbose_name='Эл.почта')
+    body = models.TextField(verbose_name='Текст комментария')
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    updated = models.DateTimeField(auto_now=True, verbose_name='Дата редактирования')
+    active = models.BooleanField(default=True, verbose_name='Статус')
     news_com = models.ForeignKey('News', on_delete=models.CASCADE, default=None, null=True)
+    users = models.ForeignKey('User', on_delete=models.CASCADE, default=None, null=True)
 
 
     def get_absolute_url(self):
-        return reverse('news-detail/<int:pk>', args=[str(self.id)])
+        return reverse('news-detail/<int:pk>', kwargs={'news_com': self.pk})
+
+    def get_description(self):
+        return self.body[:15]
+
+    get_description.short_description= 'Description'
 
 
 

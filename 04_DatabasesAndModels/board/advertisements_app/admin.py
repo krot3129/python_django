@@ -21,6 +21,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class TypeAdmin(admin.ModelAdmin):
     pass
+
 admin.site.register(Advertisement, AdvertisementAdmin)
 admin.site.register(Author, UserAdmin)
 admin.site.register(Category, CategoryAdmin)

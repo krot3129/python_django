@@ -17,13 +17,16 @@
      {% for com in comment %}
     <ul>{{com.name}}</ul>
     <ul>{{com.body}}</ul>
+    <ul>{{com.email}}</ul>
     {% endfor %}
 </form>
 
 <form action="" method="post">
         {% csrf_token %}
         {{form.as_p}}
+    
         <input type="submit" value="Сохранить">
+
         </form>
 
 
