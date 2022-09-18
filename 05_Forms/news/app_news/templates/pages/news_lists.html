@@ -9,7 +9,8 @@
     {% if news_lists %}
     <ul>
         {% for news in news_lists %}
-        <a href="news_list/{{news.id}}">{{news.name}} {{news.created_date}}</a>
+
+        <li><a href="news_list/{{news.id}}">{{news.name}} {{news.created_date}}</a></li>
     </ul>
     {% endfor %}
     {% endif %}

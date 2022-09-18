@@ -13,21 +13,32 @@
 
 <p>Дата создания: {{object.created_date}}
 </p>
-<form>
-     {% for com in comment %}
-    <ul>{{com.name}}</ul>
-    <ul>{{com.body}}</ul>
-    <ul>{{com.email}}</ul>
-    {% endfor %}
-</form>
+
 
 <form action="" method="post">
         {% csrf_token %}
-        {{form.as_p}}
-    
+    {%  if request.user.is_authenticated %}
+    {{form.body}}
+<!--        {{form.as_p}}-->
+    {% else %}
+            <p>Имя пользователя Аноним</p>
+            Комментарий:{{form.body}}
+    {% endif %}
+
         <input type="submit" value="Сохранить">
 
         </form>
+<form>
+     {% for com in comment %}
+    {% if com.users == None %}
+    <ul>Имя: Аноним</ul>
+    <ul>Комментарий: {{com.body}}</ul>
+    {% else %}
+    <ul>Имя: {{com.users}}</ul>
+    <ul>Комментарий: {{com.body}}</ul>
+    {% endif %}
+    {% endfor %}
+</form>
 
 
 

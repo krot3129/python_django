@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Comment, News, User
+from .models import Comment, News
 
 
 
@@ -11,7 +11,7 @@ class CommentInLine(admin.TabularInline):
 class CommentAdmin(admin.ModelAdmin):
     actions = ['del_for_admin']
     list_display = ('name', 'email', 'created', 'active', 'get_description')
-    list_filter = ('active', 'created', 'updated', 'users')
+    list_filter = ('active', 'created', 'updated')
     search_fields = ('name', 'email', 'body')
 
     def del_for_admin(self, request, queryset):
@@ -25,7 +25,7 @@ class CommentAdmin(admin.ModelAdmin):
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
     actions = ['active_mark', 'not_active_mark']
-    list_display = ('id', 'name', 'active', 'created_date', 'users', 'update')
+    list_display = ('id', 'name', 'active', 'created_date', 'update')
     list_filter = ['active']
     inlines = [CommentInLine]
 
@@ -38,6 +38,3 @@ class NewsAdmin(admin.ModelAdmin):
     active_mark.short_description = 'Активно'
     not_active_mark.short_description = 'Не активно'
 
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    pass

@@ -1,10 +1,13 @@
+from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView
 
 from .forms import NewsForm, CommentForm
 from .models import News, Comment
+
 
 class Main_page(View):
 
@@ -41,25 +44,35 @@ class NewsLists(ListView):
 
 class NewsDetail(DetailView):
     model = News
+    context_object_name = 'news'
 
 
 
     def get_context_data(self,  **kwargs):
         data = super().get_context_data(**kwargs)
-        data['comment'] = Comment.objects.all()
+        data['comment'] = Comment.objects.filter(news_com__pk=self.kwargs['pk'])
         data['form'] = CommentForm
         return data
 
-    def post(self, request, pk):
-        com_form = CommentForm(request.POST, pk)
-        com_ob = Comment()
-        if com_form.is_valid():
-            com_ob.save()
-            # Comment.objects.create(**com_form.cleaned_data)
-            # pk.Comment.objects.id()
+    # def get_queryset(self):
+    #     return Comment.objects.filter(news_com__pk=self.kwargs['pk'])
 
-            return HttpResponseRedirect('/news_list')
-        return render(request, 'pages/news_detail.html', context={'com_form': com_form})
+    def post(self, request, pk):
+        com_form = CommentForm(request.POST)
+        if com_form.is_valid() and request.user.is_authenticated :
+            new_comment = com_form.save(commit=False)
+            new_comment.data = com_form.cleaned_data
+            new_comment.news_com = self.get_object()
+            new_comment.users = request.user
+            new_comment.save()
+            return HttpResponseRedirect(reverse('news-detail', args=[pk]))
+        elif not request.user.is_authenticated:
+            new_comment = com_form.save(commit=False)
+            new_comment.data = com_form.cleaned_data
+            new_comment.news_com = self.get_object()
+            new_comment.save()
+            return HttpResponseRedirect(reverse('news-detail', args=[pk]))
+        return render(request, 'app_news/news_detail.html', context={'com_form': com_form})
 
 
 
@@ -71,3 +84,9 @@ class NewsUpdate(UpdateView):
     fields = ['name', 'content']
 
 
+class Login(LoginView):
+    template_name = 'pages/login.html'
+
+class Logout(LogoutView):
+
+    next_page = '/'

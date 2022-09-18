@@ -5,10 +5,19 @@
     <title>Главная страница</title>
 </head>
 <body>
-    <h1>Главные новости на сегодня</h1>
+    {% if request.user.is_authenticated %}
+        <h1>Главные новости на сегодня</h1>
 
+    <h2>Добро пожаловать {{request.user.username}}</h2>
     <a href="">На главную</a>
-    <a href="/news">Созданить новость</a>
+    <p><a href="/news">Созданить новость</a></p>
     <a href="news_list">Список новостей</a>
+    <p><a href="logout">Выход из учетной записи</a></p>
+    {% else %}
+    <h2>Вы не авторизованны на сайте</h2>
+    <p><a href="login">Войти</a></p>
+    {% endif %}
+
+
 </body>
 </html>
