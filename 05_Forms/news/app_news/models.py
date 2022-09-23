@@ -65,3 +65,4 @@ class Profile(models.Model):
         permissions = (
             ('vereficate', 'Верефикация пользователя'),
         )
+#тут
