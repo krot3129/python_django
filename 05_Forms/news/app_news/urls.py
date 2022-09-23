@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import Main_page, NewsList, NewsLists, NewsDetail, NewsUpdate, Login, Logout
+from .views import Main_page, NewsList, NewsLists, NewsDetail, NewsUpdate, Login, Logout, register
 
 urlpatterns = [
     path('', Main_page.as_view()),
@@ -9,7 +9,7 @@ urlpatterns = [
     path('news_list/<int:pk>/edit', NewsUpdate.as_view(), name='news_update'),
     path('login',Login.as_view(), name='login'),
     path('logout', Logout.as_view(), name='logout'),
-
+    path('register', register, name='register'),
 
 
 ]

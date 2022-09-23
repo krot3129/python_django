@@ -1,12 +1,12 @@
 from django.contrib.auth.views import LoginView, LogoutView
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView
-
-from .forms import NewsForm, CommentForm
-from .models import News, Comment
+from .forms import NewsForm, CommentForm, UserRegisterForm
+from .models import News, Comment, Profile
 
 
 class Main_page(View):
@@ -15,23 +15,22 @@ class Main_page(View):
         return render(reuests, 'pages/main_page.html')
 
 
-
-
 class NewsList(View):
     def get(self, request):
         news_form = NewsForm()
         return render(request, 'news_list.html', context={'news_form': news_form})
 
     def post(self, request):
-        news_form = NewsForm(request.POST)
-        if news_form.is_valid():
-            news_form.save()
+        if request.user.has_perm('app_news.add_news'):
+            news_form = NewsForm(request.POST)
+            if news_form.is_valid():
+                news_form.save()
             # News.objects.create(**news_form.cleaned_data)
-            return HttpResponseRedirect('/')
-        return render(request, 'pages/main_page.html', context={'news_form': news_form})
+                return HttpResponseRedirect('/')
+            return render(request, 'pages/main_page.html', context={'news_form': news_form})
 
-
-
+        else:
+            raise PermissionDenied()
 
 
 class NewsLists(ListView):
@@ -54,9 +53,6 @@ class NewsDetail(DetailView):
         data['form'] = CommentForm
         return data
 
-    # def get_queryset(self):
-    #     return Comment.objects.filter(news_com__pk=self.kwargs['pk'])
-
     def post(self, request, pk):
         com_form = CommentForm(request.POST)
         if com_form.is_valid() and request.user.is_authenticated :
@@ -76,12 +72,11 @@ class NewsDetail(DetailView):
 
 
 
-
-
 class NewsUpdate(UpdateView):
     model = News
     template_name = 'pages/news_up.html'
     fields = ['name', 'content']
+
 
 
 class Login(LoginView):
@@ -90,3 +85,22 @@ class Login(LoginView):
 class Logout(LogoutView):
 
     next_page = '/'
+
+
+def register(request):
+    if request.method =='POST':
+        user_form = UserRegisterForm(request.POST)
+        if user_form.is_valid():
+            new_user = user_form.save(commit=False)
+            city = user_form.cleaned_data.get('city')
+            phone = user_form.cleaned_data.get('phone')
+            new_user.set_password(user_form.cleaned_data['password'])
+            new_user.save()
+            Profile.objects.create(users=new_user, city=city, phone=phone)
+            new_user.save()
+            return render(request, 'pages/register_ok.html', context={'new_user':new_user})
+    else:
+        user_form = UserRegisterForm()
+    return render(request, 'pages/register.html', context={'user_form':user_form})
+
+

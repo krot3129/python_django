@@ -21,7 +21,12 @@ class News(models.Model):
 
     def get_absolute_url(self):
         return reverse('news-detail', args=[str(self.id)])
-
+    class Meta:
+        verbose_name = 'Новость'
+        verbose_name_plural = 'Новость'
+        permissions = (
+            ('can_publish', 'Может публиковать'),
+        )
 
 class Comment(models.Model):
     objects = None
@@ -46,12 +51,17 @@ class Comment(models.Model):
 
 
 
+class Profile(models.Model):
+    objects = None
+    users = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone = models.CharField(max_length=20, verbose_name='Телефон', blank=True, null=True)
+    city = models.CharField(max_length=30, verbose_name='Город')
+    ferifikate = models.BooleanField(verbose_name='Верефикация', blank=True, null=True)
+    news_count = models.IntegerField(verbose_name='Кол-во новостей', blank=True, null=True)
 
-#
-# class User(models.Model):
-#     name = models.CharField(max_length=30, verbose_name='Имя')
-#     email = models.EmailField(verbose_name='Электронная почта')
-#
-#     def __str__(self):
-#         return self.name
-
+    class Meta:
+        verbose_name = 'Верефикация'
+        verbose_name_plural = 'Верефикация'
+        permissions = (
+            ('vereficate', 'Верефикация пользователя'),
+        )
