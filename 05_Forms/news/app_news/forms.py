@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class NewsForm(forms.ModelForm):
     class Meta:
         model = News
-        fields = '__all__'
+        fields = ['name', 'content', 'active', 'tag']
     # name = forms.CharField(label='Заголовок')
     # content = forms.CharField(widget = forms.Textarea(attrs={'cols':60, 'rows':10 }), label='Содержание новости')
     # active = forms.BooleanField(label='Статус')

@@ -13,6 +13,8 @@ class News(models.Model):
     created_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     update = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
     active = models.BooleanField(default=None, verbose_name='Статус')
+    moderate = models.BooleanField(default=False, verbose_name='Модерация')
+    tag = models.CharField(max_length=50, verbose_name='Тэг', blank=True, null=True)
     # users = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, verbose_name='Пользователь')
 
 

@@ -37,7 +37,10 @@ class NewsLists(ListView):
     model = News
     template_name = 'pages/news_lists.html'
     context_object_name = 'news_lists'
-    queryset = News.objects.all()
+
+    def get_queryset(self):
+        queryset = super(NewsLists, self).get_queryset()
+        return queryset.filter(moderate=True)
 
 
 

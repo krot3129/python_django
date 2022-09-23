@@ -25,8 +25,8 @@ class CommentAdmin(admin.ModelAdmin):
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
     actions = ['active_mark', 'not_active_mark']
-    list_display = ('id', 'name', 'active', 'created_date', 'update')
-    list_filter = ['active']
+    list_display = ('id', 'name', 'active', 'created_date', 'update', 'tag')
+    list_filter = ['active', 'tag']
     inlines = [CommentInLine]
 
     def active_mark(self, request, queryset):
