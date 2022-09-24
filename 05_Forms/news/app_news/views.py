@@ -23,14 +23,14 @@ class NewsList(View):
     def post(self, request):
         if request.user.has_perm('app_news.add_news'):
             news_form = NewsForm(request.POST)
-            if news_form.is_valid():
+            if news_form.is_valid() and request.user.has_perm('app_news.can_publish') and request.user.has_perm('app_news.vereficate'):
                 news_form.save()
             # News.objects.create(**news_form.cleaned_data)
                 return HttpResponseRedirect('/')
             return render(request, 'pages/main_page.html', context={'news_form': news_form})
 
         else:
-            raise PermissionDenied()
+            raise PermissionDenied('Вы не можете добавить новость')
 
 
 class NewsLists(ListView):
@@ -104,6 +104,7 @@ def register(request):
             return render(request, 'pages/register_ok.html', context={'new_user':new_user})
     else:
         user_form = UserRegisterForm()
+
     return render(request, 'pages/register.html', context={'user_form':user_form})
 
 
