@@ -5,7 +5,19 @@
     <title>Главная Страница</title>
 </head>
 <body>
+ {% if request.user.is_authenticated %}
 <h2>Добро пожаловать</h2>
+ <p><a href="blog">Создать запись</a></p>
+ <p><a href="blog_list">Список записей</a> </p>
+ <p><a href="profile">Редактирование профиля</a> </p>
+ <a href="logout">Выйти</a>
+ {% else %}
+ <p><a href="login">Вход</a></p>
+ <p><a href="register">Регистрация</a> </p>
+ <p><a href="blog_list">Список новостей</a> </p>
+{% endif %}
+
+
 
 </body>
 </html>
