@@ -15,10 +15,19 @@
 <!--            </ul>-->
 <!--            {% endfor %}-->
 <!--        {% endif %}-->
-<form method="post" action="">
+<form method="post" action="" enctype="multipart/form-data">
     {% csrf_token %}
     {{ news_form.as_p }}
+    {{file_form.as_p}}
+
+    <input type="file" name="files" Загрузить>
     <button type="submit">Добавить новость</button>
+
+
 </form>
+
+
+</form>
+
 </body>
 </html>

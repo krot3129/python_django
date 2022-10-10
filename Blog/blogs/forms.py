@@ -1,28 +1,18 @@
 from django import forms
-from .models import News, Comment, Inmage
+from .models import BlogModel, Image, Profile
 from django.contrib.auth.models import User
 
-
-class NewsForm(forms.ModelForm):
+class BlogForm(forms.ModelForm):
     class Meta:
-        model = News
-        fields = ['name', 'content', 'active', 'tag']
-    # name = forms.CharField(label='Заголовок')
-    # content = forms.CharField(widget = forms.Textarea(attrs={'cols':60, 'rows':10 }), label='Содержание новости')
-    # active = forms.BooleanField(label='Статус')
+        model = BlogModel
+        fields = ['title', 'content']
 
-class InmageForm(forms.ModelForm):
+class ImageForm(forms.ModelForm):
+
+    image = forms.ImageField(label='image')
     class Meta:
-        model = Inmage
-        file_field = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
-
-
-
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ['body', 'anon_user']
-
+        model = Image
+        fields = ['image']
 
 
 class Login(forms.Form):
@@ -34,7 +24,7 @@ class UserRegisterForm(forms.ModelForm):
     password2 = forms.CharField(label='Подтверждение пороля', widget=forms.PasswordInput)
     phone = forms.CharField(label='Телефон')
     city = forms.CharField(label='Город')
-    # news_count = forms.IntegerField(label='Кол-во новостей')
+
 
 
     class Meta:
@@ -49,5 +39,8 @@ class UserRegisterForm(forms.ModelForm):
         return cd['password2']
 
 
-# class FileForm(forms.Form):
-#     file_field = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['first_name','last_name','about', 'email', 'city', 'avatar']

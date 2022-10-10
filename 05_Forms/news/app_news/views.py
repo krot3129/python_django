@@ -1,7 +1,7 @@
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView
@@ -22,10 +22,17 @@ class NewsList(View):
 
     def post(self, request):
         if request.user.has_perm('app_news.add_news'):
-            news_form = NewsForm(request.POST)
+            news_form = NewsForm(request.POST, request.FILES)
+
             if news_form.is_valid() and request.user.has_perm('app_news.can_publish') and request.user.has_perm('app_news.vereficate'):
-                news_form.save()
-            # News.objects.create(**news_form.cleaned_data)
+                news = news_form.save(commit=False)
+                news.users = request.user
+                news_form.users = request.user
+                news.save()
+                files = request.FILES.getlist('file_field')
+                for i_file in files:
+                    instance = News(files=i_file)
+                    instance.save()
                 return HttpResponseRedirect('/')
             return render(request, 'pages/main_page.html', context={'news_form': news_form})
 

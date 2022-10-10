@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+      <title>{{object.name}}</title>
+
+</head>
+<body>
+
+<h2>{{object.name}}</h2>
+<ul>
+    <li>Заголовок: {{object.name}}</li>
+    <li>Содержание новости: {{object.content}}</li>
+</ul>
+
+<p>Дата создания: {{object.created_date}}
+</p>
+{% for i in image %}
+
+<img src="{{i.image.url}"/>
+{% endfor %}
+
+</body>
+</html>

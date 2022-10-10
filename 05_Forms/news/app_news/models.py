@@ -6,7 +6,7 @@ from django.contrib.auth.models import User, AnonymousUser
 
 class News(models.Model):
     # STATUS_CHOICE ={'a':True,'n':False}
-
+    id = models.AutoField(primary_key=True)
     objects = None
     name = models.CharField(max_length=50, verbose_name='Название')
     content = models.TextField(verbose_name='Контент')
@@ -14,8 +14,8 @@ class News(models.Model):
     update = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
     active = models.BooleanField(default=None, verbose_name='Статус')
     moderate = models.BooleanField(default=False, verbose_name='Модерация')
-    tag = models.CharField(max_length=50, verbose_name='Тэг', blank=True, null=True)
-    # users = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, verbose_name='Пользователь')
+    tag = models.CharField(max_length=50, verbose_name='Тэг')
+    users = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
 
 
     def __str__(self):
@@ -31,6 +31,7 @@ class News(models.Model):
         )
 
 class Comment(models.Model):
+    id = models.AutoField(primary_key=True)
     objects = None
     name = models.CharField(max_length=50, verbose_name='Заголовок')
     email = models.EmailField(verbose_name='Эл.почта')
@@ -54,6 +55,7 @@ class Comment(models.Model):
 
 
 class Profile(models.Model):
+    id = models.AutoField(primary_key=True)
     objects = None
     users = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=20, verbose_name='Телефон', blank=True, null=True)
@@ -67,4 +69,12 @@ class Profile(models.Model):
         permissions = (
             ('vereficate', 'Верефикация пользователя'),
         )
-#тут
+
+
+
+class Inmage(models.Model):
+    file = models.ImageField(upload_to='media/', verbose_name='Изображение', blank=True)
+    news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='images', verbose_name='Изорбажение')
+
+    def __str__(self):
+        return self.news.news

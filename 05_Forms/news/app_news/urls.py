@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 from .views import Main_page, NewsList, NewsLists, NewsDetail, NewsUpdate, Login, Logout, register
 
@@ -12,4 +14,4 @@ urlpatterns = [
     path('register', register, name='register'),
 
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

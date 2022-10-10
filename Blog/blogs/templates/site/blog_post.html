@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить Запись</title>
+</head>
+<body>
+<form id="post_form" method="post" action="" enctype="multipart/form-data">
+     {% csrf_token %}
+    {% for hidden in postForm.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+
+    {% for field in post_form %}
+        {{ field }} <br />
+    {% endfor %}
+    {{ form_set.management_form }}
+    {% for form in form_set %}
+        {{ form }}<br/>
+    {% endfor %}
+
+
+    <input type="submit" name="submit" value="Submit" />
+</form>
+
+
+</body>
+</html>
