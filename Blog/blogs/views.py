@@ -12,10 +12,10 @@ from django.views.generic import ListView, DetailView
 
 def post(request):
     ImageFormSet = modelformset_factory(Image, form=ImageForm, extra=2)
-    if request.method == 'POST' and request.user.is_authenticated():
+    if request.method == 'POST':
         post_form = BlogForm(request.POST)
         form_set = ImageFormSet(request.POST, request.FILES, queryset=Image.objects.none())
-        if post_form.is_valid() and form_set.is_valid():
+        if post_form.is_valid() and form_set.is_valid() and request.user.is_authenticated:
             post = post_form.save(commit=False)
             post.user = request.user
             post.save()
