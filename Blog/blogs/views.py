@@ -100,7 +100,7 @@ def egit_user(request):
     # profile = user.profile
     # form = ProfileForm(instance=profile)
     # if request.user.is_authenticated() and request.user.id == user.id:
-    if request.method == 'POST' and request.user.is_authenticated():
+    if request.method == 'POST' and request.user.is_authenticated:
         form = ProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             update = form.save(commit=False)

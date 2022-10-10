@@ -7,11 +7,11 @@
 <body>
  {% if request.user.is_authenticated %}
  {% for post in blog %}
-    <li><a href="blog_list/{{post.id}}">{{post.created_at.date|date:"M d Y"}} -{{post.title}} {{post.content|truncatechars:100}}</a></li>
+    <li><a href="blog_list/{{post.id}}">{{post.created_at|date:"M d Y"}} {{post.title}} {{post.content|truncatechars:100}}</a></li>
 {% endfor %}
  {% else %}
  {% for post in blog %}
-    <p> {{post.created_at.date|date:"M d Y"}} - {{post.title}} {{post.content|truncatechars:100}}</p>
+    <p> {{post.created_at|date:"M d Y"}} {{post.title}} {{post.content|truncatechars:100}}</p>
  {% endfor %}
 {% endif %}
 <a href="/">На главную</a>
