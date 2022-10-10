@@ -12,7 +12,7 @@ from django.views.generic import ListView, DetailView
 
 def post(request):
     ImageFormSet = modelformset_factory(Image, form=ImageForm, extra=2)
-    if request.method == 'POST':
+    if request.method == 'POST' and request.user.is_authenticated():
         post_form = BlogForm(request.POST)
         form_set = ImageFormSet(request.POST, request.FILES, queryset=Image.objects.none())
         if post_form.is_valid() and form_set.is_valid():
@@ -100,7 +100,7 @@ def egit_user(request):
     # profile = user.profile
     # form = ProfileForm(instance=profile)
     # if request.user.is_authenticated() and request.user.id == user.id:
-    if request.method == 'POST':
+    if request.method == 'POST' and request.user.is_authenticated():
         form = ProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             update = form.save(commit=False)
