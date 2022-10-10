@@ -15,10 +15,11 @@
 
 <p>Дата создания: {{object.created_date}}
 </p>
-{% for i in image %}
+<form>
+    {% for i in image %}
 
-<img src="{{i.image.url}"/>
-{% endfor %}
-
+    <img src="{{i.image.url}}" width="100" height="50"/>
+    {% endfor %}
+</form>
 </body>
 </html>

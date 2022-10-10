@@ -56,6 +56,8 @@ class BlogDetail(DetailView):
 
 
 
+
+
 class UserLogin(LoginView):
     template_name = 'site/login.html'
 
