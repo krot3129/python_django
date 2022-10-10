@@ -5,10 +5,14 @@
     <title>Список публикаций</title>
 </head>
 <body>
- {% if blog %}
+ {% if request.user.is_authenticated %}
  {% for post in blog %}
-    <a href="blog_list/{{post.id}}">{{post.title}}</a>
+    <li><a href="blog_list/{{post.id}}">{{post.created_at.date|date:"M d Y"}} -{{post.title}}</a></li>
 {% endfor %}}
+ {% else %}
+ {% for post in blog %}
+    <p> {{post.created_at.date|date:"M d Y"}} - {{post.title}}</p>
+ {% endfor %}
 {% endif %}
 
 </body>
