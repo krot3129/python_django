@@ -7,7 +7,7 @@ from django.urls import reverse
 class BlogModel(models.Model):
     title = models.CharField(max_length=50, verbose_name='Заголовок')
     content = models.TextField(max_length=500, verbose_name='Содержание')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
     class Meta:
         ordering = ['created_at']
