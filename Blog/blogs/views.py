@@ -1,8 +1,9 @@
+from _csv import reader
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
-from .forms import BlogForm, ImageForm, Login, UserRegisterForm, ProfileForm
+from .forms import BlogForm, ImageForm, Login, UserRegisterForm, ProfileForm, UploadcvsForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views import View
 from django.forms import modelformset_factory
@@ -30,6 +31,21 @@ def post(request):
         form_set = ImageFormSet(queryset=Image.objects.none())
     return render(request, 'site/blog_post.html', context={'post_form': post_form, 'form_set': form_set})
 
+def update_post(request):
+    if request.method == 'POST':
+        upload_cvs_form = UploadcvsForm(request.POST, request.FILES)
+        if upload_cvs_form.is_valid():
+            post_file = upload_cvs_form.cleaned_data['file'].read()
+            post_str = post_file.decode('Windows-1251').split('\n')
+            csv_reader = reader(post_str, delimiter=',', quotechar='""')
+            blog = BlogForm(request.POST)
+            if blog.is_valid() and request.user.is_authenticated:
+                for row in csv_reader:
+                    BlogModel.objects.created(title=row[0], content=row[1], created_at=[row[2]])
+    else:
+        upload_cvs_form = UploadcvsForm()
+    context = {'form': upload_cvs_form}
+    return render(request, 'site/upload_cvs.html', context=context)
 
 
 
@@ -76,21 +92,10 @@ def register(request):
     return render(request, 'site/register.html', context={'user_form':user_form})
 
 
-# class BlogPost(View):
-#     def get(self, request):
-#         blog_form = BlogForm()
-#         return render(request, 'site/blog_post.html', context={'blog_form':blog_form})
-#
-#     def post(self, request, *args, **kwargs):
-#         blog_form = BlogForm(request.POST)
-#         if blog_form.is_valid():
-#             post = blog_form.save(commit=False)
-#             post.user = request.user
-#             blog_form.user = request.user
-#             post.save()
-#             return render(request, 'site/main_page.html', context={'blog_form':blog_form})
-#         else:
-#             raise PermissionDenied('Вы не можете добавить новость')
+
+
+
+
 
 class Loguot(LogoutView):
     next_page = '/'

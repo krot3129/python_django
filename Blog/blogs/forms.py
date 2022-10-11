@@ -15,6 +15,11 @@ class ImageForm(forms.ModelForm):
         fields = ['image']
 
 
+class UploadcvsForm(forms.Form):
+    file = forms.FileField()
+
+
+
 class Login(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)

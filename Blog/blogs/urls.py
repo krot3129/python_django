@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UserLogin, register, MainPage, Loguot, post, BlogList, BlogDetail, egit_user
+from .views import UserLogin, register, MainPage, Loguot, post, BlogList, BlogDetail, egit_user, update_post
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -11,7 +11,8 @@ urlpatterns = [
     path('login/', UserLogin.as_view()),
     path('logout', Loguot.as_view()),
     path('register', register, name='register'),
-    path('profile', egit_user, name='profile')
+    path('profile', egit_user, name='profile'),
+    path('update_post', update_post, name='update_post')
 
 
 
