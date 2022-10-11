@@ -36,12 +36,11 @@ def update_post(request):
         upload_cvs_form = UploadcvsForm(request.POST, request.FILES)
         if upload_cvs_form.is_valid():
             post_file = upload_cvs_form.cleaned_data['file'].read()
-            post_str = post_file.decode('Windows-1251').split('\n')
-            csv_reader = reader(post_str, delimiter=',', quotechar='""')
-            blog = BlogForm(request.POST)
-            if blog.is_valid() and request.user.is_authenticated:
-                for row in csv_reader:
-                    BlogModel.objects.created(title=row[0], content=row[1], created_at=[row[2]])
+            post_str = post_file.decode('CP866,').split('\n')
+            csv_reader = reader(post_str, delimiter=',')
+            for row in csv_reader:
+                BlogModel.objects.created(title=row[0], content=row[1], created_at=[row[2]])
+                return HttpResponse(content='Запись успешна добавленна', status=200)
     else:
         upload_cvs_form = UploadcvsForm()
     context = {'form': upload_cvs_form}
