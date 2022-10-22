@@ -102,10 +102,7 @@ class Loguot(LogoutView):
 
 @login_required
 def egit_user(request):
-    # user = request.user.get_profile()
-    # profile = user.profile
-    # form = ProfileForm(instance=profile)
-    # if request.user.is_authenticated() and request.user.id == user.id:
+
     if request.method == 'POST' and request.user.is_authenticated:
         form = ProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
