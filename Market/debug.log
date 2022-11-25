@@ -1,0 +1,20 @@
+2022-11-20 19:47:36,975 - INFO - views - views.py - Баланс пользователя admin пополнен на 1
+2022-11-20 19:47:36,976 - INFO - views - views.py - Пользователь admin у него статус Опытный пользователь
+2022-11-20 19:47:55,971 - ERROR - log - log.py - Internal Server Error: /basket
+Traceback (most recent call last):
+  File "C:\Users\malts\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\malts\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\malts\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\malts\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\malts\PycharmProjects\python_django\Market\app_market\views.py", line 59, in get
+    basket = BasketModel.objects.get(user=request.user)
+  File "C:\Users\malts\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\malts\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 650, in get
+    raise self.model.DoesNotExist(
+app_market.models.BasketModel.DoesNotExist: BasketModel matching query does not exist.
+2022-11-20 19:48:17,892 - INFO - views - views.py - заказ пользователя admin оформлен  Телефон

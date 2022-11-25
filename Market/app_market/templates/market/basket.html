@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+        <p>Пользователь: {{request.user}}</p>
+
+{{basket.user}}
+{{basket.product}} {{basket.product.price}}{{basket.quantity}}
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Купить</button>
+</form>
+
+
+
+</body>
+</html>
